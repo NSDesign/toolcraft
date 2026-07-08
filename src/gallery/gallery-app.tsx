@@ -15,7 +15,12 @@ function groupComponents(): { group: string; items: typeof galleryComponents }[]
     byGroup.get(component.group)?.push(component);
   }
 
-  return order.map((group) => ({ group, items: byGroup.get(group) ?? [] }));
+  return order.map((group) => ({
+    group,
+    items: [...(byGroup.get(group) ?? [])].sort((first, second) =>
+      first.name.localeCompare(second.name),
+    ),
+  }));
 }
 
 export function GalleryApp(): React.JSX.Element {
