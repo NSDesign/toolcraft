@@ -60,6 +60,16 @@ function toolcraftServerIdentityPlugin(): Plugin {
 }
 
 export default defineConfig({
+  // Set GALLERY_BASE (e.g. "/toolcraft/") when building for GitHub Pages project sites.
+  base: process.env.GALLERY_BASE ?? "/",
+  build: {
+    rollupOptions: {
+      input: {
+        gallery: path.resolve(rootDir, "gallery.html"),
+        main: path.resolve(rootDir, "index.html"),
+      },
+    },
+  },
   plugins: [toolcraftServerIdentityPlugin(), tailwindcss(), react()],
   resolve: {
     alias: {
