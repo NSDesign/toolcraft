@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { SurfaceScaler } from "./surface-scaler";
+
 import {
   Actions,
   AnchorGrid,
@@ -971,46 +973,60 @@ const surfaceSchema = defineToolcraft({
 });
 
 function AppSurfaceStory(): React.JSX.Element {
-  return <ToolcraftApp className="gallery-surface-app" schema={surfaceSchema} />;
+  return (
+    <SurfaceScaler>
+      <ToolcraftApp className="gallery-surface-app" schema={surfaceSchema} />
+    </SurfaceScaler>
+  );
 }
 
 function SettingsPanelStory(): React.JSX.Element {
   return (
-    <ToolcraftRoot schema={surfaceSchema}>
-      <ControlsPanel />
-    </ToolcraftRoot>
+    <div className="gallery-panel-frame">
+      <ToolcraftRoot schema={surfaceSchema}>
+        <ControlsPanel />
+      </ToolcraftRoot>
+    </div>
   );
 }
 
 function LayersPanelStory(): React.JSX.Element {
   return (
-    <ToolcraftRoot schema={surfaceSchema}>
-      <LayersPanel groupCreation />
-    </ToolcraftRoot>
+    <div className="gallery-panel-frame">
+      <ToolcraftRoot schema={surfaceSchema}>
+        <LayersPanel groupCreation />
+      </ToolcraftRoot>
+    </div>
   );
 }
 
 function ToolbarSurfaceStory(): React.JSX.Element {
   return (
-    <ToolcraftRoot schema={surfaceSchema}>
-      <ToolbarPanel />
-    </ToolcraftRoot>
+    <div className="gallery-panel-frame gallery-panel-frame--wide">
+      <ToolcraftRoot schema={surfaceSchema}>
+        <ToolbarPanel />
+      </ToolcraftRoot>
+    </div>
   );
 }
 
 function TimelineSurfaceStory(): React.JSX.Element {
   return (
-    <ToolcraftRoot schema={surfaceSchema}>
-      <TimelinePanel />
-    </ToolcraftRoot>
+    <div className="gallery-panel-frame gallery-panel-frame--wide">
+      <ToolcraftRoot schema={surfaceSchema}>
+        <TimelinePanel />
+      </ToolcraftRoot>
+    </div>
   );
 }
 
 function CanvasSurfaceStory(): React.JSX.Element {
   return (
-    <ToolcraftRoot schema={surfaceSchema}>
-      <CanvasShell />
-    </ToolcraftRoot>
+    <div className="gallery-canvas-frame">
+      <ToolcraftRoot schema={surfaceSchema}>
+        <CanvasShell />
+      </ToolcraftRoot>
+    </div>
   );
 }
 
