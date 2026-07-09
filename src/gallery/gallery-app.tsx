@@ -107,7 +107,9 @@ export function GalleryApp(): React.JSX.Element {
         ) : null}
 
         <div className="gallery-preview-card">
-          <PreviewPanel>
+          <PreviewPanel
+            variant={active.group === "Control Components" ? "panel" : "bare"}
+          >
             <Story key={`${active.id}:${story.id}`} />
           </PreviewPanel>
         </div>

@@ -249,3 +249,32 @@
     padding: 32px 32px 80px;
   }
 }
+
+/* ----- Bare preview (primitives + composites) ----- */
+.gallery-preview-bare {
+  width: 100%;
+  max-width: 420px;
+  color: var(--gallery-text);
+  font-size: 13px;
+}
+
+.gallery-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.gallery-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

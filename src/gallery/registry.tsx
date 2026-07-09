@@ -32,6 +32,56 @@ import type {
 } from "@/toolcraft/ui";
 import type { AnchorGridValue } from "@/toolcraft/ui/components/controls/anchor-grid/anchor-grid-control";
 
+import {
+  Button,
+  Checkbox as CheckboxPrimitive,
+  Input,
+  Label,
+  Separator,
+  Switch as SwitchPrimitive,
+  Textarea,
+  Toggle,
+} from "@/toolcraft/ui/components/primitives";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  Progress,
+  RadioGroup,
+  RadioGroupItem,
+  Spinner,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/toolcraft/ui/components/composites";
+
 export type GalleryStory = {
   code: string;
   id: string;
@@ -440,7 +490,249 @@ function VectorStory(): React.JSX.Element {
 /* Registry                                                                   */
 /* -------------------------------------------------------------------------- */
 
+/* -------------------------------------------------------------------------- */
+/* Primitives                                                                 */
+/* -------------------------------------------------------------------------- */
+
+function ButtonStory(): React.JSX.Element {
+  return (
+    <div className="gallery-row">
+      <Button>Default</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="destructive">Destructive</Button>
+    </div>
+  );
+}
+
+function CheckboxPrimitiveStory(): React.JSX.Element {
+  const [checked, setChecked] = React.useState(true);
+  return (
+    <Label className="gallery-inline">
+      <CheckboxPrimitive
+        checked={checked}
+        onCheckedChange={(next) => setChecked(next)}
+      />
+      Enable snapping
+    </Label>
+  );
+}
+
+function SwitchPrimitiveStory(): React.JSX.Element {
+  const [checked, setChecked] = React.useState(true);
+  return (
+    <Label className="gallery-inline">
+      <SwitchPrimitive
+        checked={checked}
+        onCheckedChange={(next) => setChecked(next)}
+      />
+      Auto preview
+    </Label>
+  );
+}
+
+function ToggleStory(): React.JSX.Element {
+  const [pressed, setPressed] = React.useState(true);
+  return (
+    <Toggle pressed={pressed} onPressedChange={(next) => setPressed(next)}>
+      Snap
+    </Toggle>
+  );
+}
+
+function InputStory(): React.JSX.Element {
+  return <Input defaultValue="" placeholder="Search components…" />;
+}
+
+function TextareaStory(): React.JSX.Element {
+  return <Textarea placeholder="Notes…" rows={3} />;
+}
+
+function LabelStory(): React.JSX.Element {
+  return (
+    <div className="gallery-stack">
+      <Label htmlFor="gallery-label-demo">Layer name</Label>
+      <Input defaultValue="Background" id="gallery-label-demo" />
+    </div>
+  );
+}
+
+function SeparatorStory(): React.JSX.Element {
+  return (
+    <div className="gallery-stack">
+      <span>Fill</span>
+      <Separator />
+      <span>Stroke</span>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Composites                                                                 */
+/* -------------------------------------------------------------------------- */
+
+function AccordionStory(): React.JSX.Element {
+  return (
+    <Accordion defaultValue={["colors"]}>
+      <AccordionItem value="colors">
+        <AccordionTrigger>Colors</AccordionTrigger>
+        <AccordionContent>
+          Fill, stroke, and gradient stops for the active layer.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="effects">
+        <AccordionTrigger>Effects</AccordionTrigger>
+        <AccordionContent>
+          Blur, noise, and grain applied after compositing.
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  );
+}
+
+function AlertStory(): React.JSX.Element {
+  return (
+    <Alert>
+      <AlertTitle>Render queued</AlertTitle>
+      <AlertDescription>
+        Your export will be ready in a few seconds.
+      </AlertDescription>
+    </Alert>
+  );
+}
+
+function AvatarStory(): React.JSX.Element {
+  return (
+    <Avatar>
+      <AvatarImage alt="NS" src="" />
+      <AvatarFallback>NS</AvatarFallback>
+    </Avatar>
+  );
+}
+
+function BadgeStory(): React.JSX.Element {
+  return (
+    <div className="gallery-row">
+      <Badge>Default</Badge>
+      <Badge variant="secondary">Secondary</Badge>
+      <Badge variant="warning">Warning</Badge>
+      <Badge variant="destructive">Destructive</Badge>
+      <Badge variant="outline">Outline</Badge>
+    </div>
+  );
+}
+
+function BreadcrumbStory(): React.JSX.Element {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#">Project</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#">Scene</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Layer 3</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}
+
+function CardStory(): React.JSX.Element {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Export preset</CardTitle>
+        <CardDescription>1080p · 8s loop · WebM</CardDescription>
+      </CardHeader>
+      <CardContent>
+        Reuse this preset across scenes to keep exports consistent.
+      </CardContent>
+      <CardFooter>
+        <Button variant="secondary">Apply</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+
+function ProgressStory(): React.JSX.Element {
+  return <Progress value={64} />;
+}
+
+function RadioGroupStory(): React.JSX.Element {
+  return (
+    <RadioGroup defaultValue="comfortable">
+      <Label className="gallery-inline">
+        <RadioGroupItem value="compact" />
+        Compact
+      </Label>
+      <Label className="gallery-inline">
+        <RadioGroupItem value="comfortable" />
+        Comfortable
+      </Label>
+      <Label className="gallery-inline">
+        <RadioGroupItem value="spacious" />
+        Spacious
+      </Label>
+    </RadioGroup>
+  );
+}
+
+function SpinnerStory(): React.JSX.Element {
+  return <Spinner />;
+}
+
+function TableStory(): React.JSX.Element {
+  const rows = [
+    { blend: "Normal", layer: "Background", opacity: "100%" },
+    { blend: "Screen", layer: "Glow", opacity: "82%" },
+    { blend: "Multiply", layer: "Shadow", opacity: "48%" },
+  ];
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Layer</TableHead>
+          <TableHead>Blend</TableHead>
+          <TableHead>Opacity</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {rows.map((row) => (
+          <TableRow key={row.layer}>
+            <TableCell>{row.layer}</TableCell>
+            <TableCell>{row.blend}</TableCell>
+            <TableCell>{row.opacity}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+
+function TabsStory(): React.JSX.Element {
+  return (
+    <Tabs defaultValue="fill">
+      <TabsList>
+        <TabsTrigger value="fill">Fill</TabsTrigger>
+        <TabsTrigger value="stroke">Stroke</TabsTrigger>
+        <TabsTrigger value="effects">Effects</TabsTrigger>
+      </TabsList>
+      <TabsContent value="fill">Solid, gradient, or image fill.</TabsContent>
+      <TabsContent value="stroke">Stroke width, color, and dash.</TabsContent>
+      <TabsContent value="effects">Blur, noise, and grain.</TabsContent>
+    </Tabs>
+  );
+}
+
 const CONTROLS = "Control Components";
+const PRIMITIVES = "Primitives";
+const COMPOSITES = "Composites";
 
 export const galleryComponents: GalleryComponent[] = [
   {
@@ -723,6 +1015,277 @@ export const galleryComponents: GalleryComponent[] = [
         id: "default",
         label: "Default",
         render: VectorStory,
+      },
+    ],
+  },
+
+  /* ---- Primitives ---- */
+  {
+    description:
+      "The base button primitive with default, secondary, outline, ghost, and destructive variants.",
+    group: PRIMITIVES,
+    id: "button",
+    name: "Button",
+    stories: [
+      {
+        code: '<Button>Default</Button>\n<Button variant="secondary">Secondary</Button>\n<Button variant="outline">Outline</Button>\n<Button variant="ghost">Ghost</Button>\n<Button variant="destructive">Destructive</Button>',
+        id: "variants",
+        label: "Variants",
+        render: ButtonStory,
+      },
+    ],
+  },
+  {
+    description: "A Base UI checkbox primitive with controlled checked state.",
+    group: PRIMITIVES,
+    id: "checkbox-primitive",
+    name: "Checkbox",
+    stories: [
+      {
+        code: "<Checkbox checked={checked} onCheckedChange={setChecked} />",
+        id: "default",
+        label: "Default",
+        render: CheckboxPrimitiveStory,
+      },
+    ],
+  },
+  {
+    description: "A single-line text input primitive.",
+    group: PRIMITIVES,
+    id: "input",
+    name: "Input",
+    stories: [
+      {
+        code: '<Input placeholder="Search components…" />',
+        id: "default",
+        label: "Default",
+        render: InputStory,
+      },
+    ],
+  },
+  {
+    description: "A form label primitive, paired with an input.",
+    group: PRIMITIVES,
+    id: "label",
+    name: "Label",
+    stories: [
+      {
+        code: '<Label htmlFor="name">Layer name</Label>\n<Input id="name" defaultValue="Background" />',
+        id: "default",
+        label: "Default",
+        render: LabelStory,
+      },
+    ],
+  },
+  {
+    description: "A horizontal or vertical divider primitive.",
+    group: PRIMITIVES,
+    id: "separator",
+    name: "Separator",
+    stories: [
+      {
+        code: "<span>Fill</span>\n<Separator />\n<span>Stroke</span>",
+        id: "default",
+        label: "Default",
+        render: SeparatorStory,
+      },
+    ],
+  },
+  {
+    description: "A Base UI switch primitive with controlled checked state.",
+    group: PRIMITIVES,
+    id: "switch-primitive",
+    name: "Switch",
+    stories: [
+      {
+        code: "<Switch checked={checked} onCheckedChange={setChecked} />",
+        id: "default",
+        label: "Default",
+        render: SwitchPrimitiveStory,
+      },
+    ],
+  },
+  {
+    description: "A multi-line text input primitive.",
+    group: PRIMITIVES,
+    id: "textarea",
+    name: "Textarea",
+    stories: [
+      {
+        code: '<Textarea placeholder="Notes…" rows={3} />',
+        id: "default",
+        label: "Default",
+        render: TextareaStory,
+      },
+    ],
+  },
+  {
+    description: "A two-state pressed toggle primitive.",
+    group: PRIMITIVES,
+    id: "toggle",
+    name: "Toggle",
+    stories: [
+      {
+        code: "<Toggle pressed={pressed} onPressedChange={setPressed}>Snap</Toggle>",
+        id: "default",
+        label: "Default",
+        render: ToggleStory,
+      },
+    ],
+  },
+
+  /* ---- Composites ---- */
+  {
+    description: "A vertically stacked set of collapsible sections.",
+    group: COMPOSITES,
+    id: "accordion",
+    name: "Accordion",
+    stories: [
+      {
+        code: '<Accordion defaultValue={["colors"]}>\n  <AccordionItem value="colors">\n    <AccordionTrigger>Colors</AccordionTrigger>\n    <AccordionContent>…</AccordionContent>\n  </AccordionItem>\n</Accordion>',
+        id: "default",
+        label: "Default",
+        render: AccordionStory,
+      },
+    ],
+  },
+  {
+    description: "A callout for surfacing status or contextual messages.",
+    group: COMPOSITES,
+    id: "alert",
+    name: "Alert",
+    stories: [
+      {
+        code: "<Alert>\n  <AlertTitle>Render queued</AlertTitle>\n  <AlertDescription>…</AlertDescription>\n</Alert>",
+        id: "default",
+        label: "Default",
+        render: AlertStory,
+      },
+    ],
+  },
+  {
+    description: "A user or entity avatar with image and fallback.",
+    group: COMPOSITES,
+    id: "avatar",
+    name: "Avatar",
+    stories: [
+      {
+        code: "<Avatar>\n  <AvatarImage src={url} alt=\"NS\" />\n  <AvatarFallback>NS</AvatarFallback>\n</Avatar>",
+        id: "default",
+        label: "Default",
+        render: AvatarStory,
+      },
+    ],
+  },
+  {
+    description: "A small status or category label with several variants.",
+    group: COMPOSITES,
+    id: "badge",
+    name: "Badge",
+    stories: [
+      {
+        code: '<Badge>Default</Badge>\n<Badge variant="secondary">Secondary</Badge>\n<Badge variant="warning">Warning</Badge>\n<Badge variant="destructive">Destructive</Badge>',
+        id: "variants",
+        label: "Variants",
+        render: BadgeStory,
+      },
+    ],
+  },
+  {
+    description: "A navigation trail showing the current location in a hierarchy.",
+    group: COMPOSITES,
+    id: "breadcrumb",
+    name: "Breadcrumb",
+    stories: [
+      {
+        code: "<Breadcrumb>\n  <BreadcrumbList>\n    <BreadcrumbItem><BreadcrumbLink href=\"#\">Project</BreadcrumbLink></BreadcrumbItem>\n    <BreadcrumbSeparator />\n    <BreadcrumbItem><BreadcrumbPage>Layer 3</BreadcrumbPage></BreadcrumbItem>\n  </BreadcrumbList>\n</Breadcrumb>",
+        id: "default",
+        label: "Default",
+        render: BreadcrumbStory,
+      },
+    ],
+  },
+  {
+    description: "A surface for grouping related content with header, body, and footer.",
+    group: COMPOSITES,
+    id: "card",
+    name: "Card",
+    stories: [
+      {
+        code: "<Card>\n  <CardHeader>\n    <CardTitle>Export preset</CardTitle>\n    <CardDescription>1080p · 8s loop · WebM</CardDescription>\n  </CardHeader>\n  <CardContent>…</CardContent>\n  <CardFooter><Button>Apply</Button></CardFooter>\n</Card>",
+        id: "default",
+        label: "Default",
+        render: CardStory,
+      },
+    ],
+  },
+  {
+    description: "A determinate progress bar.",
+    group: COMPOSITES,
+    id: "progress",
+    name: "Progress",
+    stories: [
+      {
+        code: "<Progress value={64} />",
+        id: "default",
+        label: "Default",
+        render: ProgressStory,
+      },
+    ],
+  },
+  {
+    description: "A set of mutually exclusive radio options.",
+    group: COMPOSITES,
+    id: "radio-group",
+    name: "Radio Group",
+    stories: [
+      {
+        code: '<RadioGroup defaultValue="comfortable">\n  <Label><RadioGroupItem value="compact" /> Compact</Label>\n  <Label><RadioGroupItem value="comfortable" /> Comfortable</Label>\n</RadioGroup>',
+        id: "default",
+        label: "Default",
+        render: RadioGroupStory,
+      },
+    ],
+  },
+  {
+    description: "An indeterminate loading spinner.",
+    group: COMPOSITES,
+    id: "spinner",
+    name: "Spinner",
+    stories: [
+      {
+        code: "<Spinner />",
+        id: "default",
+        label: "Default",
+        render: SpinnerStory,
+      },
+    ],
+  },
+  {
+    description: "A data table with header and body rows.",
+    group: COMPOSITES,
+    id: "table",
+    name: "Table",
+    stories: [
+      {
+        code: "<Table>\n  <TableHeader>\n    <TableRow><TableHead>Layer</TableHead>…</TableRow>\n  </TableHeader>\n  <TableBody>\n    <TableRow><TableCell>Background</TableCell>…</TableRow>\n  </TableBody>\n</Table>",
+        id: "default",
+        label: "Default",
+        render: TableStory,
+      },
+    ],
+  },
+  {
+    description: "A tabbed interface for switching between related panels.",
+    group: COMPOSITES,
+    id: "tabs",
+    name: "Tabs",
+    stories: [
+      {
+        code: '<Tabs defaultValue="fill">\n  <TabsList>\n    <TabsTrigger value="fill">Fill</TabsTrigger>\n    <TabsTrigger value="stroke">Stroke</TabsTrigger>\n  </TabsList>\n  <TabsContent value="fill">…</TabsContent>\n</Tabs>',
+        id: "default",
+        label: "Default",
+        render: TabsStory,
       },
     ],
   },

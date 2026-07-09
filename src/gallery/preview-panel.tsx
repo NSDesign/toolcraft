@@ -5,23 +5,28 @@ import { Panel } from "@/toolcraft/ui";
 export type PreviewPanelProps = {
   children: React.ReactNode;
   title?: string;
+  variant?: "panel" | "bare";
 };
 
 /**
- * Recreates the framed "Master Controls" surface used across the Toolcraft docs
- * previews. The Panel primitive supplies the header (title + reset/collapse
- * affordances) and section chrome; we only center it on a soft backdrop so the
- * live control reads the same way it does inside a real app.
+ * Frames a story for preview. Control components render inside the Toolcraft
+ * `Panel` (the "Master Controls" surface); primitives and composites render on
+ * a plain centered stage so they read the way they would in real UI.
  */
 export function PreviewPanel({
   children,
   title = "Master Controls",
+  variant = "panel",
 }: PreviewPanelProps): React.JSX.Element {
   return (
     <div className="gallery-preview-stage">
-      <div className="gallery-preview-panel">
-        <Panel title={title}>{children}</Panel>
-      </div>
+      {variant === "panel" ? (
+        <div className="gallery-preview-panel">
+          <Panel title={title}>{children}</Panel>
+        </div>
+      ) : (
+        <div className="gallery-preview-bare">{children}</div>
+      )}
     </div>
   );
 }
