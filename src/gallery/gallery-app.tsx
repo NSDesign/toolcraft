@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { PreviewErrorBoundary } from "./error-boundary";
 import { PreviewPanel } from "./preview-panel";
 import { galleryComponents } from "./registry";
 
@@ -108,9 +109,17 @@ export function GalleryApp(): React.JSX.Element {
 
         <div className="gallery-preview-card">
           <PreviewPanel
-            variant={active.group === "Control Components" ? "panel" : "bare"}
+            variant={
+              active.group === "Control Components"
+                ? "panel"
+                : active.group === "Surfaces"
+                  ? "surface"
+                  : "bare"
+            }
           >
-            <Story key={`${active.id}:${story.id}`} />
+            <PreviewErrorBoundary key={`${active.id}:${story.id}`}>
+              <Story />
+            </PreviewErrorBoundary>
           </PreviewPanel>
         </div>
 

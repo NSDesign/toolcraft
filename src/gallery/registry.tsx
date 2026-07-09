@@ -139,6 +139,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/toolcraft/ui/components/composites";
+import { defineToolcraft } from "@/toolcraft/runtime";
+import {
+  CanvasShell,
+  ControlsPanel,
+  LayersPanel,
+  TimelinePanel,
+  ToolbarPanel,
+  ToolcraftApp,
+  ToolcraftRoot,
+} from "@/toolcraft/runtime/react";
 
 export type GalleryStory = {
   code: string;
@@ -946,10 +956,69 @@ function AspectRatioStory(): React.JSX.Element {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/* Surfaces (higher-order, schema-driven)                                     */
+/* -------------------------------------------------------------------------- */
+
+const surfaceSchema = defineToolcraft({
+  canvas: { enabled: true, upload: true },
+  panels: {
+    controls: { sections: [], title: "Settings" },
+    layers: true,
+    timeline: { defaultDurationSeconds: 8, enabled: true, mode: "keyframes" },
+  },
+  toolbar: { history: true, radar: true, theme: true, zoom: true },
+});
+
+function AppSurfaceStory(): React.JSX.Element {
+  return <ToolcraftApp className="gallery-surface-app" schema={surfaceSchema} />;
+}
+
+function SettingsPanelStory(): React.JSX.Element {
+  return (
+    <ToolcraftRoot schema={surfaceSchema}>
+      <ControlsPanel />
+    </ToolcraftRoot>
+  );
+}
+
+function LayersPanelStory(): React.JSX.Element {
+  return (
+    <ToolcraftRoot schema={surfaceSchema}>
+      <LayersPanel groupCreation />
+    </ToolcraftRoot>
+  );
+}
+
+function ToolbarSurfaceStory(): React.JSX.Element {
+  return (
+    <ToolcraftRoot schema={surfaceSchema}>
+      <ToolbarPanel />
+    </ToolcraftRoot>
+  );
+}
+
+function TimelineSurfaceStory(): React.JSX.Element {
+  return (
+    <ToolcraftRoot schema={surfaceSchema}>
+      <TimelinePanel />
+    </ToolcraftRoot>
+  );
+}
+
+function CanvasSurfaceStory(): React.JSX.Element {
+  return (
+    <ToolcraftRoot schema={surfaceSchema}>
+      <CanvasShell />
+    </ToolcraftRoot>
+  );
+}
+
 const CONTROLS = "Control Components";
 const PRIMITIVES = "Primitives";
 const COMPOSITES = "Composites";
 const OVERLAYS = "Overlays";
+const SURFACES = "Surfaces";
 
 export const galleryComponents: GalleryComponent[] = [
   {
@@ -1633,6 +1702,97 @@ export const galleryComponents: GalleryComponent[] = [
         id: "default",
         label: "Default",
         render: TooltipStory,
+      },
+    ],
+  },
+
+  /* ---- Surfaces (higher-order, schema-driven) ---- */
+  {
+    description:
+      "The complete Toolcraft app composed from a schema: app bar, canvas, settings panel, layers, and timeline.",
+    group: SURFACES,
+    id: "app",
+    name: "App",
+    stories: [
+      {
+        code: 'const schema = defineToolcraft({\n  canvas: { enabled: true, upload: true },\n  panels: {\n    controls: { sections: [], title: "Settings" },\n    layers: true,\n    timeline: { defaultDurationSeconds: 8, enabled: true, mode: "keyframes" },\n  },\n  toolbar: { history: true, radar: true, theme: true, zoom: true },\n});\n\n<ToolcraftApp schema={schema} />',
+        id: "default",
+        label: "Default",
+        render: AppSurfaceStory,
+      },
+    ],
+  },
+  {
+    description:
+      "The canvas surface with upload, panning, and zoom, driven by the app schema.",
+    group: SURFACES,
+    id: "canvas",
+    name: "Canvas",
+    stories: [
+      {
+        code: "<ToolcraftRoot schema={schema}>\n  <CanvasShell />\n</ToolcraftRoot>",
+        id: "default",
+        label: "Default",
+        render: CanvasSurfaceStory,
+      },
+    ],
+  },
+  {
+    description:
+      "The layers panel with grouping, selection, and visibility toggles.",
+    group: SURFACES,
+    id: "layers-panel",
+    name: "Layers Panel",
+    stories: [
+      {
+        code: "<ToolcraftRoot schema={schema}>\n  <LayersPanel groupCreation />\n</ToolcraftRoot>",
+        id: "default",
+        label: "Default",
+        render: LayersPanelStory,
+      },
+    ],
+  },
+  {
+    description:
+      "The settings panel (ControlsPanel) that hosts control sections defined in the schema.",
+    group: SURFACES,
+    id: "settings-panel",
+    name: "Settings Panel",
+    stories: [
+      {
+        code: "<ToolcraftRoot schema={schema}>\n  <ControlsPanel />\n</ToolcraftRoot>",
+        id: "default",
+        label: "Default",
+        render: SettingsPanelStory,
+      },
+    ],
+  },
+  {
+    description: "The timeline surface for keyframes and playback.",
+    group: SURFACES,
+    id: "timeline",
+    name: "Timeline",
+    stories: [
+      {
+        code: "<ToolcraftRoot schema={schema}>\n  <TimelinePanel />\n</ToolcraftRoot>",
+        id: "default",
+        label: "Default",
+        render: TimelineSurfaceStory,
+      },
+    ],
+  },
+  {
+    description:
+      "The app bar (ToolbarPanel) with history, radar, zoom, and theme controls.",
+    group: SURFACES,
+    id: "toolbar",
+    name: "Toolbar",
+    stories: [
+      {
+        code: "<ToolcraftRoot schema={schema}>\n  <ToolbarPanel />\n</ToolcraftRoot>",
+        id: "default",
+        label: "Default",
+        render: ToolbarSurfaceStory,
       },
     ],
   },
