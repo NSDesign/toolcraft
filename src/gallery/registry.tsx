@@ -151,6 +151,61 @@ import {
   ToolcraftApp,
   ToolcraftRoot,
 } from "@/toolcraft/runtime/react";
+import { CollectionActions } from "@/toolcraft/ui";
+import {
+  ButtonGroup,
+  Field,
+  FieldDescription,
+  FieldLabel,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/toolcraft/ui/components/primitives";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  Toaster,
+} from "@/toolcraft/ui/components/composites";
+import { toast } from "sonner";
 
 export type GalleryStory = {
   code: string;
@@ -1030,6 +1085,201 @@ function CanvasSurfaceStory(): React.JSX.Element {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/* Final batch                                                                */
+/* -------------------------------------------------------------------------- */
+
+function CollectionActionsStory(): React.JSX.Element {
+  return (
+    <CollectionActions
+      addLabel="Add layer"
+      canAdd
+      canRemove
+      name="Layers"
+      removeLabel="Remove layer"
+    />
+  );
+}
+
+function ButtonGroupStory(): React.JSX.Element {
+  return (
+    <ButtonGroup>
+      <Button variant="outline">Left</Button>
+      <Button variant="outline">Center</Button>
+      <Button variant="outline">Right</Button>
+    </ButtonGroup>
+  );
+}
+
+function FieldStory(): React.JSX.Element {
+  return (
+    <Field>
+      <FieldLabel htmlFor="gallery-field-demo">Project name</FieldLabel>
+      <Input defaultValue="Untitled" id="gallery-field-demo" />
+      <FieldDescription>Shown in the export filename.</FieldDescription>
+    </Field>
+  );
+}
+
+function InputGroupStory(): React.JSX.Element {
+  return (
+    <InputGroup>
+      <InputGroupAddon>@</InputGroupAddon>
+      <InputGroupInput placeholder="username" />
+    </InputGroup>
+  );
+}
+
+function ComboboxStory(): React.JSX.Element {
+  return (
+    <Combobox>
+      <ComboboxInput placeholder="Search framework…" />
+      <ComboboxContent>
+        <ComboboxEmpty>No results.</ComboboxEmpty>
+        <ComboboxList>
+          <ComboboxItem value="react">React</ComboboxItem>
+          <ComboboxItem value="svelte">Svelte</ComboboxItem>
+          <ComboboxItem value="vue">Vue</ComboboxItem>
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  );
+}
+
+function CommandStory(): React.JSX.Element {
+  return (
+    <div className="gallery-command-frame">
+      <Command>
+        <CommandInput placeholder="Type a command…" />
+        <CommandList>
+          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandGroup heading="Actions">
+            <CommandItem>
+              New layer
+              <CommandShortcut>⌘N</CommandShortcut>
+            </CommandItem>
+            <CommandItem>
+              Duplicate
+              <CommandShortcut>⌘D</CommandShortcut>
+            </CommandItem>
+            <CommandSeparator />
+            <CommandItem>Export</CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </Command>
+    </div>
+  );
+}
+
+function MenubarStory(): React.JSX.Element {
+  return (
+    <Menubar>
+      <MenubarMenu>
+        <MenubarTrigger>File</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem>
+            New
+            <MenubarShortcut>⌘N</MenubarShortcut>
+          </MenubarItem>
+          <MenubarItem>Open</MenubarItem>
+          <MenubarSeparator />
+          <MenubarItem>Export</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>Edit</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem>Undo</MenubarItem>
+          <MenubarItem>Redo</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+    </Menubar>
+  );
+}
+
+function NavigationMenuStory(): React.JSX.Element {
+  return (
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Product</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <div className="gallery-navmenu-content">
+              <NavigationMenuLink href="#">Overview</NavigationMenuLink>
+              <NavigationMenuLink href="#">Features</NavigationMenuLink>
+              <NavigationMenuLink href="#">Pricing</NavigationMenuLink>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="#">Docs</NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+}
+
+function ResizableStory(): React.JSX.Element {
+  return (
+    <div className="gallery-resizable-frame">
+      <ResizablePanelGroup>
+        <ResizablePanel defaultSize={40}>
+          <div className="gallery-resizable-pane">Canvas</div>
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={60}>
+          <div className="gallery-resizable-pane">Preview</div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </div>
+  );
+}
+
+function SidebarStory(): React.JSX.Element {
+  return (
+    <div className="gallery-sidebar-frame">
+      <SidebarProvider>
+        <Sidebar collapsible="none">
+          <SidebarHeader>Toolcraft</SidebarHeader>
+          <SidebarContent>
+            <SidebarGroup>
+              <SidebarGroupLabel>Project</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>Canvas</SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>Layers</SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>Export</SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </SidebarContent>
+          <SidebarFooter>v0.0.13</SidebarFooter>
+        </Sidebar>
+      </SidebarProvider>
+    </div>
+  );
+}
+
+function SonnerStory(): React.JSX.Element {
+  return (
+    <div className="gallery-stack">
+      <Button
+        onClick={() => toast("Layer exported", { description: "1080p · WebM" })}
+        variant="outline"
+      >
+        Show toast
+      </Button>
+      <Toaster />
+    </div>
+  );
+}
+
 const CONTROLS = "Control Components";
 const PRIMITIVES = "Primitives";
 const COMPOSITES = "Composites";
@@ -1809,6 +2059,163 @@ export const galleryComponents: GalleryComponent[] = [
         id: "default",
         label: "Default",
         render: ToolbarSurfaceStory,
+      },
+    ],
+  },
+
+  /* ---- Final batch ---- */
+  {
+    description:
+      "A control header with add/remove actions for managing a collection of items.",
+    group: CONTROLS,
+    id: "collection-actions",
+    name: "Collection Actions",
+    stories: [
+      {
+        code: '<CollectionActions\n  name="Layers"\n  addLabel="Add layer"\n  removeLabel="Remove layer"\n  canAdd\n  canRemove\n  onAdd={handleAdd}\n  onRemove={handleRemove}\n/>',
+        id: "default",
+        label: "Default",
+        render: CollectionActionsStory,
+      },
+    ],
+  },
+  {
+    description: "Groups related buttons into a single connected control.",
+    group: PRIMITIVES,
+    id: "button-group",
+    name: "Button Group",
+    stories: [
+      {
+        code: '<ButtonGroup>\n  <Button variant="outline">Left</Button>\n  <Button variant="outline">Center</Button>\n  <Button variant="outline">Right</Button>\n</ButtonGroup>',
+        id: "default",
+        label: "Default",
+        render: ButtonGroupStory,
+      },
+    ],
+  },
+  {
+    description: "A form field wrapper pairing a label, control, and description.",
+    group: PRIMITIVES,
+    id: "field",
+    name: "Field",
+    stories: [
+      {
+        code: '<Field>\n  <FieldLabel htmlFor="name">Project name</FieldLabel>\n  <Input id="name" defaultValue="Untitled" />\n  <FieldDescription>Shown in the export filename.</FieldDescription>\n</Field>',
+        id: "default",
+        label: "Default",
+        render: FieldStory,
+      },
+    ],
+  },
+  {
+    description: "An input with attached addons such as prefixes or buttons.",
+    group: PRIMITIVES,
+    id: "input-group",
+    name: "Input Group",
+    stories: [
+      {
+        code: '<InputGroup>\n  <InputGroupAddon>@</InputGroupAddon>\n  <InputGroupInput placeholder="username" />\n</InputGroup>',
+        id: "default",
+        label: "Default",
+        render: InputGroupStory,
+      },
+    ],
+  },
+  {
+    description: "An autocomplete input that filters a list of options as you type.",
+    group: OVERLAYS,
+    id: "combobox",
+    name: "Combobox",
+    stories: [
+      {
+        code: '<Combobox>\n  <ComboboxInput placeholder="Search framework…" />\n  <ComboboxContent>\n    <ComboboxEmpty>No results.</ComboboxEmpty>\n    <ComboboxList>\n      <ComboboxItem value="react">React</ComboboxItem>\n    </ComboboxList>\n  </ComboboxContent>\n</Combobox>',
+        id: "default",
+        label: "Default",
+        render: ComboboxStory,
+      },
+    ],
+  },
+  {
+    description: "A command palette with searchable, grouped actions.",
+    group: OVERLAYS,
+    id: "command",
+    name: "Command",
+    stories: [
+      {
+        code: '<Command>\n  <CommandInput placeholder="Type a command…" />\n  <CommandList>\n    <CommandEmpty>No results found.</CommandEmpty>\n    <CommandGroup heading="Actions">\n      <CommandItem>New layer</CommandItem>\n    </CommandGroup>\n  </CommandList>\n</Command>',
+        id: "default",
+        label: "Default",
+        render: CommandStory,
+      },
+    ],
+  },
+  {
+    description: "A horizontal application menu bar (File, Edit, …) with dropdowns.",
+    group: OVERLAYS,
+    id: "menubar",
+    name: "Menubar",
+    stories: [
+      {
+        code: "<Menubar>\n  <MenubarMenu>\n    <MenubarTrigger>File</MenubarTrigger>\n    <MenubarContent>\n      <MenubarItem>New</MenubarItem>\n      …\n    </MenubarContent>\n  </MenubarMenu>\n</Menubar>",
+        id: "default",
+        label: "Default",
+        render: MenubarStory,
+      },
+    ],
+  },
+  {
+    description: "A site navigation menu with hoverable dropdown panels.",
+    group: OVERLAYS,
+    id: "navigation-menu",
+    name: "Navigation Menu",
+    stories: [
+      {
+        code: '<NavigationMenu>\n  <NavigationMenuList>\n    <NavigationMenuItem>\n      <NavigationMenuTrigger>Product</NavigationMenuTrigger>\n      <NavigationMenuContent>…</NavigationMenuContent>\n    </NavigationMenuItem>\n  </NavigationMenuList>\n</NavigationMenu>',
+        id: "default",
+        label: "Default",
+        render: NavigationMenuStory,
+      },
+    ],
+  },
+  {
+    description: "Resizable, draggable panel splits for building layouts.",
+    group: COMPOSITES,
+    id: "resizable",
+    name: "Resizable",
+    stories: [
+      {
+        code: "<ResizablePanelGroup>\n  <ResizablePanel defaultSize={40}>Canvas</ResizablePanel>\n  <ResizableHandle withHandle />\n  <ResizablePanel defaultSize={60}>Preview</ResizablePanel>\n</ResizablePanelGroup>",
+        id: "default",
+        label: "Default",
+        render: ResizableStory,
+      },
+    ],
+  },
+  {
+    description: "A composable application sidebar with grouped, collapsible navigation.",
+    group: COMPOSITES,
+    id: "sidebar",
+    name: "Sidebar",
+    stories: [
+      {
+        code: '<SidebarProvider>\n  <Sidebar collapsible="none">\n    <SidebarHeader>Toolcraft</SidebarHeader>\n    <SidebarContent>\n      <SidebarGroup>…</SidebarGroup>\n    </SidebarContent>\n    <SidebarFooter>v0.0.13</SidebarFooter>\n  </Sidebar>\n</SidebarProvider>',
+        id: "default",
+        label: "Default",
+        render: SidebarStory,
+      },
+    ],
+  },
+  {
+    description: "Toast notifications rendered from a global Toaster.",
+    group: COMPOSITES,
+    id: "sonner",
+    name: "Sonner",
+    stories: [
+      {
+        code: '<Toaster />\n\n<Button onClick={() => toast("Layer exported")}>\n  Show toast\n</Button>',
+        id: "default",
+        label: "Default",
+        render: SonnerStory,
       },
     ],
   },

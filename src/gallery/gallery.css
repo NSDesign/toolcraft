@@ -370,3 +370,54 @@
   font-size: 13px;
   max-width: 460px;
 }
+
+/* ----- Final batch frames ----- */
+.gallery-command-frame {
+  width: 100%;
+  max-width: 380px;
+  border: 1px solid var(--gallery-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.gallery-navmenu-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  min-width: 220px;
+}
+
+.gallery-navmenu-content a {
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: var(--gallery-text);
+  text-decoration: none;
+}
+
+.gallery-resizable-frame {
+  width: 100%;
+  max-width: 460px;
+  height: 220px;
+  border: 1px solid var(--gallery-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.gallery-resizable-pane {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--gallery-muted);
+  font-size: 13px;
+}
+
+.gallery-sidebar-frame {
+  width: 100%;
+  max-width: 260px;
+  height: 320px;
+  border: 1px solid var(--gallery-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
