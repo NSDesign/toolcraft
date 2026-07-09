@@ -34,13 +34,18 @@ import type { AnchorGridValue } from "@/toolcraft/ui/components/controls/anchor-
 
 import {
   Button,
-  Checkbox as CheckboxPrimitive,
   Input,
   Label,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
   Separator,
-  Switch as SwitchPrimitive,
   Textarea,
   Toggle,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "@/toolcraft/ui/components/primitives";
 import {
   Accordion,
@@ -80,6 +85,59 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
+} from "@/toolcraft/ui/components/composites";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AspectRatio,
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuTrigger,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 } from "@/toolcraft/ui/components/composites";
 
 export type GalleryStory = {
@@ -506,32 +564,6 @@ function ButtonStory(): React.JSX.Element {
   );
 }
 
-function CheckboxPrimitiveStory(): React.JSX.Element {
-  const [checked, setChecked] = React.useState(true);
-  return (
-    <Label className="gallery-inline">
-      <CheckboxPrimitive
-        checked={checked}
-        onCheckedChange={(next) => setChecked(next)}
-      />
-      Enable snapping
-    </Label>
-  );
-}
-
-function SwitchPrimitiveStory(): React.JSX.Element {
-  const [checked, setChecked] = React.useState(true);
-  return (
-    <Label className="gallery-inline">
-      <SwitchPrimitive
-        checked={checked}
-        onCheckedChange={(next) => setChecked(next)}
-      />
-      Auto preview
-    </Label>
-  );
-}
-
 function ToggleStory(): React.JSX.Element {
   const [pressed, setPressed] = React.useState(true);
   return (
@@ -730,9 +762,194 @@ function TabsStory(): React.JSX.Element {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/* Overlays (interactive / portal)                                            */
+/* -------------------------------------------------------------------------- */
+
+function DialogStory(): React.JSX.Element {
+  return (
+    <Dialog>
+      <DialogTrigger render={<Button variant="outline">Open dialog</Button>} />
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Rename layer</DialogTitle>
+          <DialogDescription>Give this layer a clear name.</DialogDescription>
+        </DialogHeader>
+        <Input defaultValue="Background" />
+        <DialogFooter>
+          <DialogClose render={<Button variant="secondary">Cancel</Button>} />
+          <DialogClose render={<Button>Save</Button>} />
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function AlertDialogStory(): React.JSX.Element {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger
+        render={<Button variant="destructive">Delete layer</Button>}
+      />
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Delete this layer?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action can&apos;t be undone.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction>Delete</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+function DropdownMenuStory(): React.JSX.Element {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<Button variant="outline">Layer options</Button>}
+      />
+      <DropdownMenuContent>
+        <DropdownMenuLabel>Layer</DropdownMenuLabel>
+        <DropdownMenuItem>
+          Duplicate
+          <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuItem>Rename</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function ContextMenuStory(): React.JSX.Element {
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger className="gallery-contextmenu-target">
+        Right-click here
+      </ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuItem>
+          Cut
+          <ContextMenuShortcut>⌘X</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuItem>
+          Copy
+          <ContextMenuShortcut>⌘C</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuSeparator />
+        <ContextMenuItem>Delete</ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
+  );
+}
+
+function SheetStory(): React.JSX.Element {
+  return (
+    <Sheet>
+      <SheetTrigger render={<Button variant="outline">Open sheet</Button>} />
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Export settings</SheetTitle>
+          <SheetDescription>
+            Configure the export for this scene.
+          </SheetDescription>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+function PopoverStory(): React.JSX.Element {
+  return (
+    <Popover>
+      <PopoverTrigger render={<Button variant="outline">Open popover</Button>} />
+      <PopoverContent>Adjust quick settings for the layer.</PopoverContent>
+    </Popover>
+  );
+}
+
+function TooltipStory(): React.JSX.Element {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger render={<Button variant="outline">Hover me</Button>} />
+        <TooltipContent>Resets the panel</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+
+function HoverCardStory(): React.JSX.Element {
+  return (
+    <HoverCard>
+      <HoverCardTrigger render={<Button variant="link">@toolcraft</Button>} />
+      <HoverCardContent>
+        The component toolkit for Toolcraft apps.
+      </HoverCardContent>
+    </HoverCard>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Inline composites                                                          */
+/* -------------------------------------------------------------------------- */
+
+function PaginationStory(): React.JSX.Element {
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious href="#" />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">1</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">2</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">3</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext href="#" />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+}
+
+function EmptyStory(): React.JSX.Element {
+  return (
+    <Empty>
+      <EmptyHeader>
+        <EmptyTitle>No layers yet</EmptyTitle>
+        <EmptyDescription>Add a layer to start compositing.</EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <Button>Add layer</Button>
+      </EmptyContent>
+    </Empty>
+  );
+}
+
+function AspectRatioStory(): React.JSX.Element {
+  return (
+    <AspectRatio ratio={16 / 9}>
+      <div className="gallery-aspect-fill">16 : 9</div>
+    </AspectRatio>
+  );
+}
+
 const CONTROLS = "Control Components";
 const PRIMITIVES = "Primitives";
 const COMPOSITES = "Composites";
+const OVERLAYS = "Overlays";
 
 export const galleryComponents: GalleryComponent[] = [
   {
@@ -1036,20 +1253,6 @@ export const galleryComponents: GalleryComponent[] = [
     ],
   },
   {
-    description: "A Base UI checkbox primitive with controlled checked state.",
-    group: PRIMITIVES,
-    id: "checkbox-primitive",
-    name: "Checkbox",
-    stories: [
-      {
-        code: "<Checkbox checked={checked} onCheckedChange={setChecked} />",
-        id: "default",
-        label: "Default",
-        render: CheckboxPrimitiveStory,
-      },
-    ],
-  },
-  {
     description: "A single-line text input primitive.",
     group: PRIMITIVES,
     id: "input",
@@ -1088,20 +1291,6 @@ export const galleryComponents: GalleryComponent[] = [
         id: "default",
         label: "Default",
         render: SeparatorStory,
-      },
-    ],
-  },
-  {
-    description: "A Base UI switch primitive with controlled checked state.",
-    group: PRIMITIVES,
-    id: "switch-primitive",
-    name: "Switch",
-    stories: [
-      {
-        code: "<Switch checked={checked} onCheckedChange={setChecked} />",
-        id: "default",
-        label: "Default",
-        render: SwitchPrimitiveStory,
       },
     ],
   },
@@ -1286,6 +1475,164 @@ export const galleryComponents: GalleryComponent[] = [
         id: "default",
         label: "Default",
         render: TabsStory,
+      },
+    ],
+  },
+  {
+    description: "Constrains content to a fixed width-to-height ratio.",
+    group: COMPOSITES,
+    id: "aspect-ratio",
+    name: "Aspect Ratio",
+    stories: [
+      {
+        code: "<AspectRatio ratio={16 / 9}>\n  <img src={url} alt=\"\" />\n</AspectRatio>",
+        id: "default",
+        label: "Default",
+        render: AspectRatioStory,
+      },
+    ],
+  },
+  {
+    description: "An empty-state placeholder with a title, description, and action.",
+    group: COMPOSITES,
+    id: "empty",
+    name: "Empty",
+    stories: [
+      {
+        code: "<Empty>\n  <EmptyHeader>\n    <EmptyTitle>No layers yet</EmptyTitle>\n    <EmptyDescription>…</EmptyDescription>\n  </EmptyHeader>\n  <EmptyContent><Button>Add layer</Button></EmptyContent>\n</Empty>",
+        id: "default",
+        label: "Default",
+        render: EmptyStory,
+      },
+    ],
+  },
+  {
+    description: "Page navigation with previous/next and numbered links.",
+    group: COMPOSITES,
+    id: "pagination",
+    name: "Pagination",
+    stories: [
+      {
+        code: "<Pagination>\n  <PaginationContent>\n    <PaginationItem><PaginationPrevious href=\"#\" /></PaginationItem>\n    <PaginationItem><PaginationLink href=\"#\">1</PaginationLink></PaginationItem>\n    <PaginationItem><PaginationNext href=\"#\" /></PaginationItem>\n  </PaginationContent>\n</Pagination>",
+        id: "default",
+        label: "Default",
+        render: PaginationStory,
+      },
+    ],
+  },
+
+  /* ---- Overlays (interactive / portal) ---- */
+  {
+    description:
+      "A confirmation dialog for destructive actions, with cancel and confirm.",
+    group: OVERLAYS,
+    id: "alert-dialog",
+    name: "Alert Dialog",
+    stories: [
+      {
+        code: "<AlertDialog>\n  <AlertDialogTrigger render={<Button variant=\"destructive\">Delete</Button>} />\n  <AlertDialogContent>…</AlertDialogContent>\n</AlertDialog>",
+        id: "default",
+        label: "Default",
+        render: AlertDialogStory,
+      },
+    ],
+  },
+  {
+    description:
+      "A right-click menu of contextual actions anchored to a target area.",
+    group: OVERLAYS,
+    id: "context-menu",
+    name: "Context Menu",
+    stories: [
+      {
+        code: "<ContextMenu>\n  <ContextMenuTrigger>Right-click here</ContextMenuTrigger>\n  <ContextMenuContent>\n    <ContextMenuItem>Cut</ContextMenuItem>\n    …\n  </ContextMenuContent>\n</ContextMenu>",
+        id: "default",
+        label: "Default",
+        render: ContextMenuStory,
+      },
+    ],
+  },
+  {
+    description: "A modal dialog opened from a trigger, with header and footer.",
+    group: OVERLAYS,
+    id: "dialog",
+    name: "Dialog",
+    stories: [
+      {
+        code: "<Dialog>\n  <DialogTrigger render={<Button>Open dialog</Button>} />\n  <DialogContent>\n    <DialogHeader><DialogTitle>Rename layer</DialogTitle></DialogHeader>\n    …\n  </DialogContent>\n</Dialog>",
+        id: "default",
+        label: "Default",
+        render: DialogStory,
+      },
+    ],
+  },
+  {
+    description: "A menu of actions opened from a trigger button.",
+    group: OVERLAYS,
+    id: "dropdown-menu",
+    name: "Dropdown Menu",
+    stories: [
+      {
+        code: "<DropdownMenu>\n  <DropdownMenuTrigger render={<Button>Layer options</Button>} />\n  <DropdownMenuContent>\n    <DropdownMenuItem>Duplicate</DropdownMenuItem>\n    …\n  </DropdownMenuContent>\n</DropdownMenu>",
+        id: "default",
+        label: "Default",
+        render: DropdownMenuStory,
+      },
+    ],
+  },
+  {
+    description: "A card of rich preview content shown on hover.",
+    group: OVERLAYS,
+    id: "hover-card",
+    name: "Hover Card",
+    stories: [
+      {
+        code: "<HoverCard>\n  <HoverCardTrigger render={<Button variant=\"link\">@toolcraft</Button>} />\n  <HoverCardContent>…</HoverCardContent>\n</HoverCard>",
+        id: "default",
+        label: "Default",
+        render: HoverCardStory,
+      },
+    ],
+  },
+  {
+    description: "A floating panel of secondary controls anchored to a trigger.",
+    group: OVERLAYS,
+    id: "popover",
+    name: "Popover",
+    stories: [
+      {
+        code: "<Popover>\n  <PopoverTrigger render={<Button>Open popover</Button>} />\n  <PopoverContent>…</PopoverContent>\n</Popover>",
+        id: "default",
+        label: "Default",
+        render: PopoverStory,
+      },
+    ],
+  },
+  {
+    description: "A side panel that slides in from the edge of the viewport.",
+    group: OVERLAYS,
+    id: "sheet",
+    name: "Sheet",
+    stories: [
+      {
+        code: "<Sheet>\n  <SheetTrigger render={<Button>Open sheet</Button>} />\n  <SheetContent>\n    <SheetHeader><SheetTitle>Export settings</SheetTitle></SheetHeader>\n  </SheetContent>\n</Sheet>",
+        id: "default",
+        label: "Default",
+        render: SheetStory,
+      },
+    ],
+  },
+  {
+    description: "A small hint shown on hover or focus of a trigger.",
+    group: OVERLAYS,
+    id: "tooltip",
+    name: "Tooltip",
+    stories: [
+      {
+        code: "<TooltipProvider>\n  <Tooltip>\n    <TooltipTrigger render={<Button>Hover me</Button>} />\n    <TooltipContent>Resets the panel</TooltipContent>\n  </Tooltip>\n</TooltipProvider>",
+        id: "default",
+        label: "Default",
+        render: TooltipStory,
       },
     ],
   },
